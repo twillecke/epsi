@@ -1,11 +1,13 @@
+import Password from "../vo/Password";
+import Username from "../vo/Username";
 export default abstract class User {
   createdAt: Date;
-  username: string;
-  password: string;
+  username: Username;
+  password: Password;
 
   constructor(username: string, password: string) {
     this.createdAt = new Date();
-    this.username = username;
-    this.password = password;
+    this.username = new Username(username);
+    this.password = new Password(password);
   }
 }
