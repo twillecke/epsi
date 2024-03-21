@@ -61,10 +61,11 @@ export default class Psychologist extends User {
       phone,
       city,
       province,
-      address,
-      emailAddress
+      emailAddress,
+      address
     )
   }
+  getCreatedAt() { return this.createdAt; }
   getUsername() { return this.username.getValue(); }
   getPassword() { return this.password.getValue(); }
   getName() { return this.name.getValue(); }
