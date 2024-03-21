@@ -1,7 +1,6 @@
 import Patient from "../../src/domain/entity/Patient";
 
 test("Should create a patient", async function () {
-  // GIVEN
   const input = {
     psychologistId: "9c7f4683-094f-4302-bedd-0725e056cd27",
     name: "John Doe",
@@ -14,10 +13,8 @@ test("Should create a patient", async function () {
     address: "Rua das Gaivotas, 1274",
     emailAddress: "johndoe@mail.com"
   }
-  // WHEN
   const patient = Patient.create(input.psychologistId, input.name, input.birthdate, input.cpf, input.phone, input.emergencyPhone, input.city, input.province, input.address, input.emailAddress);
 
-  // THEN
   expect(patient.accountId).toBeDefined();
   expect(patient.getPsychologistId()).toBe("9c7f4683-094f-4302-bedd-0725e056cd27");
   expect(patient.getName()).toBe("John Doe");
@@ -32,7 +29,6 @@ test("Should create a patient", async function () {
 })
 
 test("Should not create a patient with invalid name", async function () {
-  // GIVEN
   const input = {
     psychologistId: "9c7f4683-094f-4302-bedd-0725e056cd27",
     name: "",
@@ -45,12 +41,10 @@ test("Should not create a patient with invalid name", async function () {
     address: "Rua das Gaivotas, 1274",
     emailAddress: "johndoe@mail.com"
   }
-  // WHEN
   expect(() => Patient.create(input.psychologistId, input.name, input.birthdate, input.cpf, input.phone, input.emergencyPhone, input.city, input.province, input.address, input.emailAddress)).toThrow(new Error("Invalid name"));
 })
 
 test("Should not create a patient with invalid birthdate", async function () {
-  // GIVEN
   const input = {
     psychologistId: "9c7f4683-094f-4302-bedd-0725e056cd27",
     name: "John Doe",
@@ -67,7 +61,6 @@ test("Should not create a patient with invalid birthdate", async function () {
 })
 
 test("Should not create a patient with invalid cpf", async function () {
-  // GIVEN
   const input = {
     psychologistId: "9c7f4683-094f-4302-bedd-0725e056cd27",
     name: "John Doe",
@@ -81,4 +74,20 @@ test("Should not create a patient with invalid cpf", async function () {
     emailAddress: "johndoe@mail.com"
   }
   expect(() => Patient.create(input.psychologistId, input.name, input.birthdate, input.cpf, input.phone, input.emergencyPhone, input.city, input.province, input.address, input.emailAddress)).toThrow(new Error("Invalid cpf"));
+})
+
+test("Should not create a patient with invalid email address", async function () {
+  const input = {
+    psychologistId: "9c7f4683-094f-4302-bedd-0725e056cd27",
+    name: "John Doe",
+    birthdate: "01-10-1994",
+    cpf: "45672354017",
+    phone: "5548988444975",
+    emergencyPhone: "48998753364",
+    city: "Florianopolis",
+    province: "Santa Catarina",
+    address: "Rua das Gaivotas, 1274",
+    emailAddress: ""
+  }
+  expect(() => Patient.create(input.psychologistId, input.name, input.birthdate, input.cpf, input.phone, input.emergencyPhone, input.city, input.province, input.address, input.emailAddress)).toThrow(new Error("Invalid email"));
 })
