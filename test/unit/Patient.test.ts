@@ -19,16 +19,16 @@ test("Should create a patient", async function () {
 
   // THEN
   expect(patient.accountId).toBeDefined();
-  expect(patient.psychologistId).toBe("9c7f4683-094f-4302-bedd-0725e056cd27");
-  expect(patient.name.getValue()).toBe("John Doe");
-  expect(patient.birthdate.getValue()).toBe("01-10-1994");
-  expect(patient.cpf.getValue()).toBe("45672354017");
-  expect(patient.phone).toBe("5548988444975");
-  expect(patient.emergencyPhone).toBe("48998753364");
-  expect(patient.city).toBe("Florianopolis");
-  expect(patient.province).toBe("Santa Catarina");
-  expect(patient.address).toBe("Rua das Gaivotas, 1274");
-  expect(patient.emailAddress).toBe("johndoe@mail.com")
+  expect(patient.getPsychologistId()).toBe("9c7f4683-094f-4302-bedd-0725e056cd27");
+  expect(patient.getName()).toBe("John Doe");
+  expect(patient.getBirthdate()).toBe("01-10-1994");
+  expect(patient.getCpf()).toBe("45672354017");
+  expect(patient.getPhone()).toBe("5548988444975");
+  expect(patient.getEmergencyPhone()).toBe("48998753364");
+  expect(patient.getCity()).toBe("Florianopolis");
+  expect(patient.getProvince()).toBe("Santa Catarina");
+  expect(patient.getAddress()).toBe("Rua das Gaivotas, 1274");
+  expect(patient.getEmailAddress()).toBe("johndoe@mail.com")
 })
 
 test("Should not create a patient with invalid name", async function () {
