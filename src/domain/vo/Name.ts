@@ -7,7 +7,7 @@ export default class Name {
   }
 
   private isInvalidName(name: string) {
-    return !name.match(/[a-zA-Z] [a-zA-Z]+/);
+    return !name.match(/([a-zA-Z]+ )+[a-zA-Z]+/);
   }
 
   getValue() {
