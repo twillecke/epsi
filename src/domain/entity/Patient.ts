@@ -17,7 +17,7 @@ export default class Patient {
 
   private constructor(
     psychologistId: string,
-    readonly accountId: string,
+    readonly patientId: string,
     name: string,
     birthdate: string,
     cpf: string,
@@ -52,10 +52,10 @@ export default class Patient {
     emailAddress: string,
     address: string
   ) {
-    const accountId = crypto.randomUUID();
+    const patientId = crypto.randomUUID();
     return new Patient(
       psychologistId,
-      accountId,
+      patientId,
       name,
       birthdate,
       cpf,
@@ -67,6 +67,11 @@ export default class Patient {
       emailAddress
     )
   }
+
+  static restore(psychologistId: string, patientId: string, name: string, birthdate: string, cpf: string, phone: string, emergencyPhone: string, city: string, province: string, emailAddress: string, address: string) {
+    return new Patient(psychologistId, patientId, name, birthdate, cpf, phone, emergencyPhone, city, province, emailAddress, address);
+  }
+
   getName() { return this.name.getValue(); }
   getBirthdate() { return this.birthdate.getValue(); }
   getCpf() { return this.cpf.getValue(); }
@@ -76,7 +81,7 @@ export default class Patient {
   getEmergencyPhone() { return this.emergencyPhone; }
   getCity() { return this.city; }
   getProvince() { return this.province; }
-  getAccountId() { return this.accountId; }
+  getPatientId() { return this.patientId; }
   getPsychologistId() { return this.psychologistId; }
 
 }
