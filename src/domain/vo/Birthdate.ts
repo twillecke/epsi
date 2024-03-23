@@ -7,7 +7,7 @@ export default class Birthdate {
   }
 
   private isInvalidBirthdate(birthdate: string) {
-    return !birthdate.match(/\d{2}-\d{2}-\d{4}/);
+    return !birthdate.match(/\d{4}-\d{2}-\d{2}/);
   }
 
   getValue() {
