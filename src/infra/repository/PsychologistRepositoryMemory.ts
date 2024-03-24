@@ -1,35 +1,39 @@
-import Psychologist from "../../domain/entity/Psychologist";
+import PsychologistProfile from "../../../src/domain/entity/PsychologistProfile";
 import PsychologistRepository from "../../domain/repository/PsychologistRepository";
-
+import { PsychologistProfileData } from "./PsychologistProfileData";
 export default class PsychologistRepositoryMemory implements PsychologistRepository {
-  psychologists: Psychologist[]
+  psychologistsProfiles: PsychologistProfileData[]
   constructor() {
-    this.psychologists = [];
+    this.psychologistsProfiles = [];
   }
 
-  async save(psychologist: Psychologist) {
-    this.psychologists.push(psychologist);
-  }
-
-  async getByEmail(emailAddress: string) {
-    return this.psychologists.find(psychologist => psychologist.getEmailAddress() === emailAddress);
+  async save(psychologistProfile: PsychologistProfile) {
+    const psychologistProfileData = {
+      userId: psychologistProfile.getUserId(),
+      name: psychologistProfile.getName(),
+      birthdate: psychologistProfile.getBirthdate(),
+      cpf: psychologistProfile.getCpf(),
+      phone: psychologistProfile.getPhone(),
+      city: psychologistProfile.getCity(),
+      province: psychologistProfile.getProvince(),
+      address: psychologistProfile.getAddress()
+    }
+    this.psychologistsProfiles.push(psychologistProfileData);
   }
 
   async getByCpf(cpf: string) {
-    return this.psychologists.find(psychologist => psychologist.getCpf() === cpf);
+    const psychologistProfile = this.psychologistsProfiles.find(psychologist => psychologist.cpf === cpf);
+    if (!psychologistProfile) return;
+    return PsychologistProfile.restore(psychologistProfile.userId, psychologistProfile.name, psychologistProfile.birthdate, psychologistProfile.cpf, psychologistProfile.phone, psychologistProfile.city, psychologistProfile.province, psychologistProfile.address);
   }
 
-  async getByPsychologistId(psychologistId: string) {
-    const [psychologist] = this.psychologists.filter(psychologist => psychologist.getPsychologistId() === psychologistId);
-    if (!psychologist) return;
-    return psychologist;
+  async getByUserId(userId: string) {
+    const [psychologistProfile] = this.psychologistsProfiles.filter(psychologist => psychologist.userId === userId);
+    if (!psychologistProfile) return;
+    return PsychologistProfile.restore(psychologistProfile.userId, psychologistProfile.name, psychologistProfile.birthdate, psychologistProfile.cpf, psychologistProfile.phone, psychologistProfile.city, psychologistProfile.province, psychologistProfile.address);
   }
 
-  async getByUsername(username: string) {
-    return this.psychologists.find(psychologist => psychologist.getUsername() === username);
-  }
-
-  async deleteByCpf(cpf: string) {
-    this.psychologists = this.psychologists.filter(psychologist => psychologist.getCpf() !== cpf);
+  async deleteByUserId(userId: string) {
+    this.psychologistsProfiles = this.psychologistsProfiles.filter(psychologist => psychologist.userId !== userId);
   }
 }

@@ -1,9 +1,8 @@
-import Psychologist from "../entity/Psychologist";
+import PsychologistProfile from "../entity/PsychologistProfile";
 
 export default interface PsychologistRepository {
-  save(psychologist: Psychologist): Promise<void>;
-  getByEmail(email: string): Promise<Psychologist | undefined>;
-  getByCpf(cpf: string): Promise<Psychologist | undefined>;
-  getByUsername(username: string): Promise<Psychologist | undefined>;
-  deleteByCpf(cpf: string): Promise<void>;
+  save(psychologistProfile: PsychologistProfile): Promise<void>;
+  getByCpf(cpf: string): Promise<PsychologistProfile | undefined>;
+  deleteByUserId(userId: string): Promise<void>;
+  getByUserId(userId: string): Promise<PsychologistProfile | undefined>;
 }
