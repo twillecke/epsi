@@ -1,4 +1,3 @@
-import Patient from "../../src/domain/entity/Patient";
 import { PatientRepositoryDatabase } from "../../src/infra/repository/PatientRepository";
 import { PgPromiseAdapter } from "../../src/infra/database/DatabaseConnection";
 import PatientRegister from "../../src/application/usecase/PatientRegister";
@@ -79,6 +78,7 @@ test("Should delete Patient from database by cpf", async function () {
   connection.close();
 })
 
+// Skip test to avoid side effects in the database
 test.skip("Should not store duplicated Patient in database", async function () {
   // Arrange
   const connection = new PgPromiseAdapter();
