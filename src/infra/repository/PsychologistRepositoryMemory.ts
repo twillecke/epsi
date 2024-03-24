@@ -25,6 +25,10 @@ export default class PsychologistRepositoryMemory implements PsychologistReposit
     return psychologist;
   }
 
+  async getByUsername(username: string) {
+    return this.psychologists.find(psychologist => psychologist.getUsername() === username);
+  }
+
   async deleteByCpf(cpf: string) {
     this.psychologists = this.psychologists.filter(psychologist => psychologist.getCpf() !== cpf);
   }
