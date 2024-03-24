@@ -17,7 +17,7 @@ export default class Psychologist extends User {
   private constructor(
     username: string,
     password: string,
-    readonly accountId: string,
+    readonly psychologistId: string,
     name: string,
     birthdate: string,
     cpf: string,
@@ -50,11 +50,11 @@ export default class Psychologist extends User {
     emailAddress: string,
     address: string
   ) {
-    const accountId = crypto.randomUUID();
+    const psychologistId = crypto.randomUUID();
     return new Psychologist(
       username,
       password,
-      accountId,
+      psychologistId,
       name,
       birthdate,
       cpf,
@@ -76,5 +76,5 @@ export default class Psychologist extends User {
   getPhone() { return this.phone; }
   getCity() { return this.city; }
   getProvince() { return this.province; }
-  getAccountId() { return this.accountId; }
+  getPsychologistId() { return this.psychologistId; }
 }

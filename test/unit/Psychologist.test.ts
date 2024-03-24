@@ -17,7 +17,7 @@ test("Should create a psychologist", async function () {
   const psychologistOutput = Psychologist.create(input.usename, input.password, input.name, input.birthdate, input.cpf, input.phone, input.city, input.province, input.emailAddress, input.address);
 
   expect(psychologistOutput.getUsername()).toBe("john_doe");
-  expect(psychologistOutput.getAccountId()).toBeDefined();
+  expect(psychologistOutput.getPsychologistId()).toBeDefined();
   expect(psychologistOutput.getPassword()).toBe("@Test123");
   expect(psychologistOutput.getName()).toBe("John Doe");
   expect(psychologistOutput.getBirthdate()).toBe("1994-10-01");
