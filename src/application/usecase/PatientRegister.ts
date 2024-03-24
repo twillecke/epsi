@@ -4,6 +4,7 @@ import Patient from "../../domain/entity/Patient";
 /**
  * 1. Psychologist (user) must be logged in to register a patient
  * 2. All patients must to be associated to a Pscyhologist account (psychologistId)
+ * 3. Therefore the psychologistId must be passed as a parameter to the patient register use case
  */
 
 export default class PatientRegister {
