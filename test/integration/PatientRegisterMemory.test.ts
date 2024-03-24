@@ -1,5 +1,3 @@
-import { PatientRepositoryDatabase } from "../../src/infra/repository/PatientRepositoryDatabase";
-import { PgPromiseAdapter } from "../../src/infra/database/DatabaseConnection";
 import PatientRegister from "../../src/application/usecase/PatientRegister";
 import PatientRepositoryMemory from "../../src/infra/repository/PatientRepositoryMemory";
 
