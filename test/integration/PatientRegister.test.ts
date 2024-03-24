@@ -1,11 +1,11 @@
-import { PatientRepositoryDatabase } from "../../src/infra/repository/PatientRepository";
+import { PatientRepositoryDatabase } from "../../src/infra/repository/PatientRepositoryDatabase";
 import { PgPromiseAdapter } from "../../src/infra/database/DatabaseConnection";
 import PatientRegister from "../../src/application/usecase/PatientRegister";
 
 test("Should store Patient in database", async function () {
   const connection = new PgPromiseAdapter();
-  const patientRepository = new PatientRepositoryDatabase(connection);
-  const register = new PatientRegister(patientRepository);
+  const patientRepositoryDatabase = new PatientRepositoryDatabase(connection);
+  const register = new PatientRegister(patientRepositoryDatabase);
 
   const input = {
     psychologistId: "9c7f4683-094f-4302-bedd-0725e056cd27",
@@ -21,7 +21,7 @@ test("Should store Patient in database", async function () {
   }
 
   const outputregister = await register.execute(input);
-  const storedPatient = await patientRepository.getByPsychologistId(outputregister.patientId);
+  const storedPatient = await patientRepositoryDatabase.getByPsychologistId(outputregister.patientId);
 
   expect(storedPatient?.getPsychologistId()).toBe("9c7f4683-094f-4302-bedd-0725e056cd27");
   expect(storedPatient?.getName()).toBe("John Doe");
@@ -35,14 +35,14 @@ test("Should store Patient in database", async function () {
   expect(storedPatient?.getEmailAddress()).toBe("johndoe@mail.com");
 
   // Delete patient from database to avoid side effects
-  await patientRepository.deleteByCpf("45672354017");
+  await patientRepositoryDatabase.deleteByCpf("45672354017");
   connection.close();
 })
 
 test("Should delete Patient from database by cpf", async function () {
   const connection = new PgPromiseAdapter();
-  const patientRepository = new PatientRepositoryDatabase(connection);
-  const register = new PatientRegister(patientRepository);
+  const patientRepositoryDatabase = new PatientRepositoryDatabase(connection);
+  const register = new PatientRegister(patientRepositoryDatabase);
 
   const input = {
     psychologistId: "9c7f4683-094f-4302-bedd-0725e056cd27",
@@ -58,7 +58,7 @@ test("Should delete Patient from database by cpf", async function () {
   }
 
   const outputregister = await register.execute(input);
-  const storedPatient = await patientRepository.getByPsychologistId(outputregister.patientId);
+  const storedPatient = await patientRepositoryDatabase.getByPsychologistId(outputregister.patientId);
 
   expect(storedPatient?.getPsychologistId()).toBe("9c7f4683-094f-4302-bedd-0725e056cd27");
   expect(storedPatient?.getName()).toBe("John Doe");
@@ -72,8 +72,8 @@ test("Should delete Patient from database by cpf", async function () {
   expect(storedPatient?.getEmailAddress()).toBe("johndoe@mail.com");
 
   // Delete patient from database to avoid side effects
-  await patientRepository.deleteByCpf("45672354017");
-  const deletedPatient = await patientRepository.getByPsychologistId(outputregister.patientId);
+  await patientRepositoryDatabase.deleteByCpf("45672354017");
+  const deletedPatient = await patientRepositoryDatabase.getByPsychologistId(outputregister.patientId);
   expect(deletedPatient).toBeUndefined();
   connection.close();
 })
@@ -82,8 +82,8 @@ test("Should delete Patient from database by cpf", async function () {
 test.skip("Should not store duplicated Patient in database", async function () {
   // Arrange
   const connection = new PgPromiseAdapter();
-  const patientRepository = new PatientRepositoryDatabase(connection);
-  const register = new PatientRegister(patientRepository);
+  const patientRepositoryDatabase = new PatientRepositoryDatabase(connection);
+  const register = new PatientRegister(patientRepositoryDatabase);
 
   const input = {
     psychologistId: "9c7f4683-094f-4302-bedd-0725e056cd27",
