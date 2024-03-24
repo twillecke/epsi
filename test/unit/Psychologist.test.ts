@@ -14,19 +14,19 @@ test("Should create a psychologist", async function () {
     emailAddress: "johndoe@mail.com"
   }
 
-  const psychologist = Psychologist.create(input.usename, input.password, input.name, input.birthdate, input.cpf, input.phone, input.city, input.province, input.emailAddress, input.address);
+  const psychologistOutput = Psychologist.create(input.usename, input.password, input.name, input.birthdate, input.cpf, input.phone, input.city, input.province, input.emailAddress, input.address);
 
-  expect(psychologist.getUsername()).toBe("john_doe");
-  expect(psychologist.getAccountId()).toBeDefined();
-  expect(psychologist.getPassword()).toBe("@Test123");
-  expect(psychologist.getName()).toBe("John Doe");
-  expect(psychologist.getBirthdate()).toBe("1994-10-01");
-  expect(psychologist.getCpf()).toBe("45672354017");
-  expect(psychologist.getPhone()).toBe("5548988444975");
-  expect(psychologist.getCity()).toBe("Florianopolis");
-  expect(psychologist.getProvince()).toBe("Santa Catarina");
-  expect(psychologist.getAddress()).toBe("Rua das Gaivotas, 1274");
-  expect(psychologist.getEmailAddress()).toBe("johndoe@mail.com")
+  expect(psychologistOutput.getUsername()).toBe("john_doe");
+  expect(psychologistOutput.getAccountId()).toBeDefined();
+  expect(psychologistOutput.getPassword()).toBe("@Test123");
+  expect(psychologistOutput.getName()).toBe("John Doe");
+  expect(psychologistOutput.getBirthdate()).toBe("1994-10-01");
+  expect(psychologistOutput.getCpf()).toBe("45672354017");
+  expect(psychologistOutput.getPhone()).toBe("5548988444975");
+  expect(psychologistOutput.getCity()).toBe("Florianopolis");
+  expect(psychologistOutput.getProvince()).toBe("Santa Catarina");
+  expect(psychologistOutput.getAddress()).toBe("Rua das Gaivotas, 1274");
+  expect(psychologistOutput.getEmailAddress()).toBe("johndoe@mail.com")
 })
 
 test("Should not create a psychologist with invalid username", async function () {

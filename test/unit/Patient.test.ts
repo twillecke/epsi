@@ -13,19 +13,19 @@ test("Should create a patient", async function () {
     address: "Rua das Gaivotas, 1274",
     emailAddress: "johndoe@mail.com"
   }
-  const patient = Patient.create(input.psychologistId, input.name, input.birthdate, input.cpf, input.phone, input.emergencyPhone, input.city, input.province, input.address, input.emailAddress);
+  const patientOutput = Patient.create(input.psychologistId, input.name, input.birthdate, input.cpf, input.phone, input.emergencyPhone, input.city, input.province, input.address, input.emailAddress);
 
-  expect(patient.patientId).toBeDefined();
-  expect(patient.getPsychologistId()).toBe("9c7f4683-094f-4302-bedd-0725e056cd27");
-  expect(patient.getName()).toBe("John Doe");
-  expect(patient.getBirthdate()).toBe("1994-10-01");
-  expect(patient.getCpf()).toBe("45672354017");
-  expect(patient.getPhone()).toBe("5548988444975");
-  expect(patient.getEmergencyPhone()).toBe("48998753364");
-  expect(patient.getCity()).toBe("Florianopolis");
-  expect(patient.getProvince()).toBe("Santa Catarina");
-  expect(patient.getAddress()).toBe("Rua das Gaivotas, 1274");
-  expect(patient.getEmailAddress()).toBe("johndoe@mail.com")
+  expect(patientOutput.patientId).toBeDefined();
+  expect(patientOutput.getPsychologistId()).toBe("9c7f4683-094f-4302-bedd-0725e056cd27");
+  expect(patientOutput.getName()).toBe("John Doe");
+  expect(patientOutput.getBirthdate()).toBe("1994-10-01");
+  expect(patientOutput.getCpf()).toBe("45672354017");
+  expect(patientOutput.getPhone()).toBe("5548988444975");
+  expect(patientOutput.getEmergencyPhone()).toBe("48998753364");
+  expect(patientOutput.getCity()).toBe("Florianopolis");
+  expect(patientOutput.getProvince()).toBe("Santa Catarina");
+  expect(patientOutput.getAddress()).toBe("Rua das Gaivotas, 1274");
+  expect(patientOutput.getEmailAddress()).toBe("johndoe@mail.com")
 })
 
 test("Should not create a patient with invalid name", async function () {
