@@ -1,16 +1,7 @@
+import PatientRepository from "src/domain/repository/PatientRepository";
 import Patient from "../../domain/entity/Patient";
 import DatabaseConnection from "../database/DatabaseConnection";
 
-// Port
-export default interface PatientRepository {
-  save(patient: Patient): Promise<void>;
-  getByEmail(email: string): Promise<Patient | undefined>;
-  getByCpf(cpf: string): Promise<Patient | undefined>;
-  getByPsychologistId(patientId: string): Promise<Patient | undefined>;
-  deleteByCpf(cpf: string): Promise<void>;
-}
-
-// Adapter Database
 export class PatientRepositoryDatabase implements PatientRepository {
 
   constructor(readonly connection: DatabaseConnection) {
