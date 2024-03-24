@@ -59,6 +59,8 @@ test.skip("Should not store duplicated Patient in database", async function () {
     emailAddress: "johndoe@mail.com"
   }
   await register.execute(input);
-  expect(() => register.execute(input)).toThrow(new Error("Patient already exists"));
+  expect(async () => {
+    await register.execute(input);
+  }).rejects.toThrow(new Error("Patient already exists"));
 })
 
