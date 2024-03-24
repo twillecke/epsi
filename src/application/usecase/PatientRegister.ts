@@ -1,4 +1,4 @@
-import PatientRepository from "src/infra/repository/PatientRepository";
+import PatientRepository from "src/domain/repository/PatientRepository";
 import Patient from "../../domain/entity/Patient";
 
 /**
