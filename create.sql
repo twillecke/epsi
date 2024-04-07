@@ -24,3 +24,23 @@ CREATE TABLE patient (
     email_address VARCHAR(100),
     address VARCHAR(255)
 );
+
+CREATE TABLE epsi.user_credentials (
+    user_id UUID,
+    created_at TIMESTAMP,
+    email_address VARCHAR(255),
+    username VARCHAR(255),
+    password VARCHAR(255),
+    role VARCHAR(255)
+);
+
+CREATE TABLE epsi.psychologist_profile (
+    user_id UUID,
+    name VARCHAR(255),
+    birthdate VARCHAR(12),
+    cpf VARCHAR(14),
+    phone VARCHAR(20),
+    city VARCHAR(255),
+    province VARCHAR(255),
+    address VARCHAR(255)
+);
