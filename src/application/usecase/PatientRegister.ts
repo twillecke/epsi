@@ -7,10 +7,23 @@ import Patient from "../../domain/entity/Patient";
  * 3. Therefore the psychologistId must be passed as a parameter to the patient register use case
  */
 
+type PatiengRegisterInput = {
+  psychologistId: string,
+  name: string,
+  birthdate: string,
+  cpf: string,
+  phone: string,
+  emergencyPhone: string,
+  city: string,
+  province: string,
+  address: string,
+  emailAddress: string
+}
+
 export default class PatientRegister {
   constructor(readonly patientRepository: PatientRepository) { }
 
-  async execute(input: any) {
+  async execute(input: PatiengRegisterInput) {
     console.log("patient register", input);
     const existingPatient = await this.patientRepository.getByCpf(input.cpf);
     if (existingPatient) throw new Error("Patient already exists");

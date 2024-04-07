@@ -12,7 +12,7 @@ test("Should sign up a user in memory", async function () {
   const input = {
     username: "johndoe",
     password: "@Test123",
-    email_address: "johndoe@mail.com",
+    emailAddress: "johndoe@mail.com",
     role: "PSYCHOLOGIST",
     name: "John Doe",
     birthdate: "1994-10-01",

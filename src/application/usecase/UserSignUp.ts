@@ -4,6 +4,19 @@ import PsychologistProfile from "../../../src/domain/entity/PsychologistProfile"
 import UserCredentialsRepository from "../../../src/domain/repository/UserCredentialsRepository";
 import CypherService from "../../../src/infra/service/CypherService";
 
+type UserSignUpInput = {
+  username: string,
+  password: string,
+  emailAddress: string,
+  role: string,
+  name: string,
+  birthdate: string,
+  cpf: string,
+  phone: string,
+  city: string,
+  province: string,
+  address: string,
+}
 export default class UserSignUp {
   psychologistRepository: any;
   userCredentialsRepository: any;
@@ -12,7 +25,7 @@ export default class UserSignUp {
     this.userCredentialsRepository = userCredentialsRepository;
   }
 
-  async execute(input: any) {
+  async execute(input: UserSignUpInput) {
     console.log("user sign-up", input);
 
     const existingUserCpf = await this.psychologistRepository.getByCpf(input.cpf);
@@ -25,7 +38,7 @@ export default class UserSignUp {
 
     const hashedPassword = await CypherService.encrypt(input.password);
 
-    const userCredentialsOutput = await UserCredentials.create(input.username, input.email_address, hashedPassword, input.role);
+    const userCredentialsOutput = await UserCredentials.create(input.username, input.emailAddress, hashedPassword, input.role);
     const psychologistProfileOutput = await PsychologistProfile.create(userCredentialsOutput.getUserId(), input.name, input.birthdate, input.cpf, input.phone, input.city, input.province, input.address);
 
     await this.userCredentialsRepository.save(userCredentialsOutput);
