@@ -4,7 +4,7 @@ import Username from "../vo/Username";
 
 export default class UserCredentials {
   userId: string;
-  createdAt: Date;
+  readonly createdAt: Date;
   username: Username;
   password: Password;
   emailAddress: Email;
