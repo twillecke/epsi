@@ -30,6 +30,6 @@ export default class UserCredentialsRepositoryMemory implements UserCredentialsR
   async getByEmailAddress(emailAddress: string) {
     const [userCredentialsData] = await this.connection.query("select user_id, created_at, email_address, username, password, role from epsi.user_credentials where email_address = $1", [emailAddress]);
     if (!userCredentialsData) return;
-    return UserCredentials.restore(userCredentialsData.userId, userCredentialsData.username, userCredentialsData.email_address, userCredentialsData.password, userCredentialsData.role);
+    return UserCredentials.restore(userCredentialsData.user_id, userCredentialsData.username, userCredentialsData.email_address, userCredentialsData.password, userCredentialsData.role);
   }
 }
