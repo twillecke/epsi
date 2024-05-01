@@ -19,10 +19,11 @@ app.post('/api/login', async (req, res) => {
   const userSignIn: UserSignIn = new UserSignIn(userCredentialsRepositoryDatabase);
   try {
     const output = await userSignIn.execute(input);
-    console.log(output);
+    res.send(output)
+    console.log("api/login output", output);
   }
-  catch (e) {
-    console.log(e);
+  catch (error) {
+    console.log(error);
   }
   connection.close();
 });
@@ -33,8 +34,25 @@ app.post('/api/users', async (req, res) => {
   const userCredentialsRepositoryDatabase = new UserCredentialsRepositoryDatabase(connection);
   const psychologistRepositoryDatabase = new PsychologistRepositoryDatabase(connection);
   const userSignUp: UserSignUp = new UserSignUp(psychologistRepositoryDatabase, userCredentialsRepositoryDatabase);
-  await userSignUp.execute(input);
+  try {
+    await userSignUp.execute(input);
+  } catch (error) {
+    console.log(error);
+  }
   connection.close();
+})
+
+app.get('/api/users/:userId', async (req, res) => {
+  const connection = new PgPromiseAdapter();
+  const psychologistRepositoryDatabase = new PsychologistRepositoryDatabase(connection);
+  const userId = req.params.userId;
+  console.log("userId", userId);
+  try {
+    const output = await psychologistRepositoryDatabase.getByUserId(userId);
+    res.send(output);
+  } catch (error) {
+    console.log(error);
+  }
 })
 
 app.listen(process.env.HTTP_SERVER_PORT || 3000, () => {
