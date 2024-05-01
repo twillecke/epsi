@@ -20,7 +20,7 @@ export default class PsychologistRepositoryDatabase implements PsychologistRepos
   async getByUserId(userId: string) {
     const [psychologistProfileData] = await this.connection.query("SELECT user_id, name, birthdate, cpf, phone, city, province, address FROM epsi.psychologist_profile WHERE user_id = $1", [userId]);
     if (!psychologistProfileData) return;
-    return PsychologistProfile.restore(psychologistProfileData.user_id, psychologistProfileData.name, psychologistProfileData.birthdate, psychologistProfileData.cpf, psychologistProfileData.phone, psychologistProfileData.city, psychologistProfileData.province, psychologistProfileData.address);
+    return PsychologistProfile.restore(psychologistProfileData.userId, psychologistProfileData.name, psychologistProfileData.birthdate, psychologistProfileData.cpf, psychologistProfileData.phone, psychologistProfileData.city, psychologistProfileData.province, psychologistProfileData.address);
   }
 
   async deleteByUserId(userId: string) {

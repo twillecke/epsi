@@ -20,7 +20,7 @@ export default class UserCredentialsRepositoryMemory implements UserCredentialsR
   async getByUsername(username: string) {
     const [userCredentialsData] = await this.connection.query("select user_id, created_at, email_address, username, password, role from epsi.user_credentials where username = $1", [username]);
     if (!userCredentialsData) return;
-    return UserCredentials.restore(userCredentialsData.userId, userCredentialsData.username, userCredentialsData.email_address, userCredentialsData.password, userCredentialsData.role);
+    return UserCredentials.restore(userCredentialsData.user_id, userCredentialsData.username, userCredentialsData.email_address, userCredentialsData.password, userCredentialsData.role);
   }
 
   async deleteByUserId(userId: string) {
