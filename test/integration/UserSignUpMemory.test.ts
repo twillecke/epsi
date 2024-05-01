@@ -1,6 +1,4 @@
 import UserCredentialsRepositoryMemory from "../../src/infra/repository/UserCredentialsRepositoryMemory";
-import UserCredentials from "../../src/domain/entity/UserCredentials";
-import PsychologistProfile from "../../src/domain/entity/PsychologistProfile";
 import PsychologistRepositoryMemory from "../../src/infra/repository/PsychologistRepositoryMemory";
 import UserSignUp from "../../src/application/usecase/UserSignUp";
 
@@ -39,5 +37,4 @@ test("Should sign up a user in memory", async function () {
   expect(storedPsychologist?.getProvince()).toBe("Santa Catarina");
   expect(storedPsychologist?.getAddress()).toBe("Rua das Gaivotas, 1274");
   console.log(storedUserCredentials, storedPsychologist);
-
 })
