@@ -85,6 +85,19 @@ app.post('/api/users/:userId/patients', async (req, res) => {
   connection.close();
 });
 
+app.delete('/api/users/:userId/patients/:cpf', async (req, res) => {
+  const connection = new PgPromiseAdapter();
+  const patientRepository = new PatientRepositoryDatabase(connection);
+  const cpf = req.params.cpf;
+  try {
+    await patientRepository.deleteByCpf(cpf);
+    res.send({ message: "Patient deleted" });
+  } catch (error) {
+    console.log(error);
+  }
+  connection.close();
+});
+
 app.listen(process.env.HTTP_SERVER_PORT || 3000, () => {
   console.log(`Server is running on port ${process.env.HTTP_SERVER_PORT}`);
 });
