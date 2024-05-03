@@ -12,6 +12,10 @@ export class PatientRepositoryDatabase implements PatientRepository {
       [patient.getPsychologistId(), patient.getPatientId(), patient.getName(), patient.getBirthdate(), patient.getCpf(), patient.getPhone(), patient.getEmergencyPhone(), patient.getCity(), patient.getProvince(), patient.getEmailAddress(), patient.getAddress()]);
   }
 
+  async deleteByCpf(patientId: string) {
+    await this.connection.query("delete from epsi.patient where patient_id = $1", [patientId]);
+  }
+
   async getByEmail(emailAddress: string) {
     const [patient] = await this.connection.query("select psychologist_id, patient_id, name, birthdate, cpf, phone, emergency_phone, city, province, email_address, address from epsi.patient where email_address = $1", [emailAddress]);
     if (!patient) return;
@@ -28,9 +32,5 @@ export class PatientRepositoryDatabase implements PatientRepository {
     const patients = await this.connection.query("select psychologist_id, patient_id, name, birthdate, cpf, phone, emergency_phone, city, province, email_address, address from epsi.patient where psychologist_id = $1", [psychologistId]);
     if (!patients) return;
     return patients.map((patient: any) => Patient.restore(patient.psychologist_id, patient.patient_id, patient.name, patient.birthdate, patient.cpf, patient.phone, patient.emergency_phone, patient.city, patient.province, patient.email_address, patient.address));
-  }
-
-  async deleteByCpf(cpf: string): Promise<void> {
-    await this.connection.query("delete from epsi.patient where cpf = $1", [cpf]);
   }
 }
