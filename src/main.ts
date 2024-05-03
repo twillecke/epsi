@@ -6,6 +6,8 @@ import { PgPromiseAdapter } from './infra/database/DatabaseConnection';
 import UserCredentialsRepositoryDatabase from './infra/repository/UserCredentialsRepositoryDatabase';
 import PsychologistRepositoryDatabase from './infra/repository/PsychologistRepositoryDatabase';
 import UserSignIn from './application/usecase/UserSignIn';
+import { PatientRepositoryDatabase } from './infra/repository/PatientRepositoryDatabase';
+import PatientRegister from './application/usecase/PatientRegister';
 
 dotenv.config();
 const app = express();
@@ -54,6 +56,34 @@ app.get('/api/users/:userId', async (req, res) => {
     console.log(error);
   }
 })
+
+app.get('/api/users/:userId/patients', async (req, res) => {
+  const connection = new PgPromiseAdapter();
+  const patientRepository = new PatientRepositoryDatabase(connection);
+  const userId = req.params.userId;
+  try {
+    const output = await patientRepository.getByPsychologistId(userId);
+    res.send(output);
+  } catch (error) {
+    console.log(error);
+  }
+  connection.close();
+});
+
+app.post('/api/users/:userId/patients', async (req, res) => {
+  const connection = new PgPromiseAdapter();
+  const patientRepository = new PatientRepositoryDatabase(connection);
+  const patientRegister = new PatientRegister(patientRepository);
+  const userId = req.params.userId;
+  const input = { ...req.body, psychologistId: userId };
+  try {
+    const output = await patientRegister.execute(input);
+    res.send({ message: "Patient registered" });
+  } catch (error) {
+    console.log(error);
+  }
+  connection.close();
+});
 
 app.listen(process.env.HTTP_SERVER_PORT || 3000, () => {
   console.log(`Server is running on port ${process.env.HTTP_SERVER_PORT}`);
