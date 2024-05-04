@@ -30,7 +30,7 @@ export default class PatientRegister {
     const patient = Patient.create(input.psychologistId, input.name, input.birthdate, input.cpf, input.phone, input.emergencyPhone, input.city, input.province, input.address, input.emailAddress);
     await this.patientRepository.save(patient);
     return {
-      patientId: patient.getPsychologistId()
+      psychologistId: patient.getPsychologistId()
     }
   }
 }

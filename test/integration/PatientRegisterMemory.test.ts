@@ -19,7 +19,7 @@ test("Should store Patient in memory", async function () {
   }
 
   const outputregister = await register.execute(input);
-  const storedPatient = await patientRepositoryMemory.getByPsychologistId(outputregister.patientId);
+  const storedPatient = await patientRepositoryMemory.getByPsychologistId(outputregister.psychologistId);
 
   expect(storedPatient?.getPsychologistId()).toBe("9c7f4683-094f-4302-bedd-0725e056cd27");
   expect(storedPatient?.getName()).toBe("John Doe");
@@ -54,7 +54,7 @@ test("Should delete Patient from memory by cpf", async function () {
   }
 
   const outputregister = await register.execute(input);
-  const storedPatient = await patientRepositoryMemory.getByPsychologistId(outputregister.patientId);
+  const storedPatient = await patientRepositoryMemory.getByPsychologistId(outputregister.psychologistId);
 
   expect(storedPatient?.getPsychologistId()).toBe("9c7f4683-094f-4302-bedd-0725e056cd27");
   expect(storedPatient?.getName()).toBe("John Doe");
@@ -69,7 +69,7 @@ test("Should delete Patient from memory by cpf", async function () {
 
   // Delete patient from memory to avoid side effects
   await patientRepositoryMemory.deleteByCpf("45672354017");
-  const deletedPatient = await patientRepositoryMemory.getByPsychologistId(outputregister.patientId);
+  const deletedPatient = await patientRepositoryMemory.getByPsychologistId(outputregister.psychologistId);
   expect(deletedPatient).toBeUndefined();
 })
 
