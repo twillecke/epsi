@@ -12,8 +12,8 @@ export class PatientRepositoryDatabase implements PatientRepository {
       [patient.getPsychologistId(), patient.getPatientId(), patient.getName(), patient.getBirthdate(), patient.getCpf(), patient.getPhone(), patient.getEmergencyPhone(), patient.getCity(), patient.getProvince(), patient.getEmailAddress(), patient.getAddress()]);
   }
 
-  async deleteByCpf(patientId: string) {
-    await this.connection.query("delete from epsi.patient where patient_id = $1", [patientId]);
+  async deleteByCpf(cpf: string) {
+    await this.connection.query("delete from epsi.patient where cpf = $1", [cpf]);
   }
 
   async getByEmail(emailAddress: string) {
