@@ -8,6 +8,7 @@ import PsychologistRepositoryDatabase from './infra/repository/PsychologistRepos
 import UserSignIn from './application/usecase/UserSignIn';
 import { PatientRepositoryDatabase } from './infra/repository/PatientRepositoryDatabase';
 import PatientRegister from './application/usecase/PatientRegister';
+import UserAuthenticationService from './infra/service/AuthenticationService';
 
 dotenv.config();
 const app = express();
@@ -44,16 +45,23 @@ app.post('/api/users', async (req, res) => {
   connection.close();
 })
 
-app.get('/api/users/:userId', async (req, res) => {
+app.get('/api/users', async (req, res) => {
+  const authorizationHeader = req.headers.authorization;
+  if (!authorizationHeader) {
+    res.status(401).send({ message: "Unauthorized" });
+    return;
+  }
+  const decodedJWT = await UserAuthenticationService.verify(authorizationHeader);
+  const userId = decodedJWT.userId;
   const connection = new PgPromiseAdapter();
   const psychologistRepositoryDatabase = new PsychologistRepositoryDatabase(connection);
-  const userId = req.params.userId;
-  console.log("userId", userId);
   try {
     const output = await psychologistRepositoryDatabase.getByUserId(userId);
     res.send(output);
   } catch (error) {
     console.log(error);
+  }finally{
+    connection.close();
   }
 })
 

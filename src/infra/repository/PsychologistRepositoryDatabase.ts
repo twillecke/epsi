@@ -17,10 +17,18 @@ export default class PsychologistRepositoryDatabase implements PsychologistRepos
     return PsychologistProfile.restore(psychologistProfileData.userId, psychologistProfileData.name, psychologistProfileData.birthdate, psychologistProfileData.cpf, psychologistProfileData.phone, psychologistProfileData.city, psychologistProfileData.province, psychologistProfileData.address);
   }
 
+  async restoreByUserId(userId: string) {
+    const [psychologistProfileData] = await this.connection.query("SELECT user_id, name, birthdate, cpf, phone, city, province, address FROM epsi.psychologist_profile WHERE user_id = $1", [userId]);
+    console.log("$ ~ PsychologistRepositoryDatabase ~ getByUserId ~ psychologistProfileData:", psychologistProfileData)
+    if (!psychologistProfileData) return;
+    return PsychologistProfile.restore(psychologistProfileData.userId, psychologistProfileData.name, psychologistProfileData.birthdate, psychologistProfileData.cpf, psychologistProfileData.phone, psychologistProfileData.city, psychologistProfileData.province, psychologistProfileData.address);
+  }
+
   async getByUserId(userId: string) {
     const [psychologistProfileData] = await this.connection.query("SELECT user_id, name, birthdate, cpf, phone, city, province, address FROM epsi.psychologist_profile WHERE user_id = $1", [userId]);
     if (!psychologistProfileData) return;
-    return PsychologistProfile.restore(psychologistProfileData.userId, psychologistProfileData.name, psychologistProfileData.birthdate, psychologistProfileData.cpf, psychologistProfileData.phone, psychologistProfileData.city, psychologistProfileData.province, psychologistProfileData.address);
+    console.log("$ ~ PsychologistRepositoryDatabase ~ getByUserId ~ psychologistProfileData:", psychologistProfileData)
+    return {userId: psychologistProfileData.userId, name: psychologistProfileData.name, birthdate: psychologistProfileData.birthdate, cpf: psychologistProfileData.cpf, phone: psychologistProfileData.phone, city: psychologistProfileData.city, province: psychologistProfileData.province, adress: psychologistProfileData.address};
   }
 
   async deleteByUserId(userId: string) {

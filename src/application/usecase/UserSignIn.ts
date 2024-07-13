@@ -24,13 +24,12 @@ export default class UserSignIn {
   }
 
   async execute(input: UserSignInInput) {
-    console.log("user sign-in", input);
     const existingUser = await this.userCredentialsRepository.getByUsername(input.username);
     if (!existingUser) throw new Error("Invalid username or password");
     const isPasswordValid = await CypherService.compare(input.password, existingUser.getPassword());
     if (!isPasswordValid) throw new Error("Invalid username or password");
+    console.log("UserSignIn", existingUser);
     const accessToken = await UserAuthenticationService.execute(existingUser.getUsername(), existingUser.getUserId());
-    console.log("Existin user inside use case:", existingUser);
 
     return {
       userId: existingUser.getUserId(),
