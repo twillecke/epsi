@@ -29,7 +29,7 @@ export default class UserSignIn {
     const isPasswordValid = await CypherService.compare(input.password, existingUser.getPassword());
     if (!isPasswordValid) throw new Error("Invalid username or password");
     console.log("UserSignIn", existingUser);
-    const accessToken = await UserAuthenticationService.execute(existingUser.getUsername(), existingUser.getUserId());
+    const accessToken = UserAuthenticationService.generateJWT(existingUser.getUsername(), existingUser.getUserId());
 
     return {
       userId: existingUser.getUserId(),

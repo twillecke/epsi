@@ -58,7 +58,7 @@ app.get('/api/users', async (req, res) => {
   }
   const connection = new PgPromiseAdapter();
   try {
-    const decodedJWT = await UserAuthenticationService.verify(authorizationHeader);
+    const decodedJWT = await UserAuthenticationService.verifyJWT(authorizationHeader);
     const userId = decodedJWT.userId;
     const psychologistRepositoryDatabase = new PsychologistRepositoryDatabase(connection);
     const output = await psychologistRepositoryDatabase.getByUserId(userId);
