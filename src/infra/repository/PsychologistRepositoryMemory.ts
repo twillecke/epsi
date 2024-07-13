@@ -6,6 +6,9 @@ export default class PsychologistRepositoryMemory implements PsychologistReposit
   constructor() {
     this.psychologistsProfiles = [];
   }
+  restoreByUserId(userId: string): Promise<PsychologistProfile | undefined> {
+    throw new Error("Method not implemented.");
+  }
 
   async save(psychologistProfile: PsychologistProfile) {
     const psychologistProfileData = {

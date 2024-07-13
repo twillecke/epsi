@@ -26,7 +26,7 @@ test("Should sign up a user in database", async function () {
   const userSignUpOutput = await userSignUp.execute(input);
 
   const storedUserCredentials = await userCredentialsRepositoryDatabase.getByUserId(userSignUpOutput.userId);
-  const storedPsychologist = await psychologistRepositoryDatabase.getByUserId(userSignUpOutput.userId);
+  const storedPsychologist = await psychologistRepositoryDatabase.restoreByUserId(userSignUpOutput.userId);
 
   expect(storedUserCredentials?.getUsername()).toBe("johndoe");
   expect(storedUserCredentials?.getRole()).toBe("PSYCHOLOGIST");
