@@ -27,8 +27,10 @@ app.post('/api/login', async (req, res) => {
   }
   catch (error) {
     console.log(error);
+    res.status(401).send({ error: 'Invalid username or password' }); // Send 401 Unauthorized
+  }finally{
+    connection.close();
   }
-  connection.close();
 });
 
 app.post('/api/users', async (req, res) => {
@@ -41,25 +43,29 @@ app.post('/api/users', async (req, res) => {
     await userSignUp.execute(input);
   } catch (error) {
     console.log(error);
+    res.status(400).send({ error: error });
+  }finally{
+    connection.close();
   }
-  connection.close();
 })
 
+// gets the user profile by the user_id contained in the JWT token
 app.get('/api/users', async (req, res) => {
   const authorizationHeader = req.headers.authorization;
   if (!authorizationHeader) {
     res.status(401).send({ message: "Unauthorized" });
     return;
   }
-  const decodedJWT = await UserAuthenticationService.verify(authorizationHeader);
-  const userId = decodedJWT.userId;
   const connection = new PgPromiseAdapter();
-  const psychologistRepositoryDatabase = new PsychologistRepositoryDatabase(connection);
   try {
+    const decodedJWT = await UserAuthenticationService.verify(authorizationHeader);
+    const userId = decodedJWT.userId;
+    const psychologistRepositoryDatabase = new PsychologistRepositoryDatabase(connection);
     const output = await psychologistRepositoryDatabase.getByUserId(userId);
     res.send(output);
   } catch (error) {
     console.log(error);
+    res.status(404).send({ message: error });
   }finally{
     connection.close();
   }
@@ -74,8 +80,10 @@ app.get('/api/users/:userId/patients', async (req, res) => {
     res.send(output);
   } catch (error) {
     console.log(error);
+  }  
+  finally{
+    connection.close();
   }
-  connection.close();
 });
 
 app.post('/api/users/:userId/patients', async (req, res) => {
@@ -89,8 +97,11 @@ app.post('/api/users/:userId/patients', async (req, res) => {
     res.send({ message: "Patient registered" });
   } catch (error) {
     console.log(error);
+    res.status(400).send({ error: error });
   }
-  connection.close();
+  finally{
+    connection.close();
+  }
 });
 
 app.delete('/api/users/:userId/patients/:cpf', async (req, res) => {
@@ -102,8 +113,11 @@ app.delete('/api/users/:userId/patients/:cpf', async (req, res) => {
     res.send({ message: "Patient deleted" });
   } catch (error) {
     console.log(error);
+    res.status(400).send({ error: error });
   }
-  connection.close();
+  finally{
+    connection.close();
+  }
 });
 
 app.listen(process.env.HTTP_SERVER_PORT || 3000, () => {
